@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#15171c" media="(prefers-color-scheme: dark)">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.github.com https://raw.githubusercontent.com; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Viremail status</title>
+  <meta name="description" content="Is Viremail working? Live checks of the website and app, sign-in, mail sending, mail access and desktop downloads, with 90 days of history.">
+  <meta name="status-repo" content="svayam-workplace/viremail-status">
+  <meta name="status-branch" content="main">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="alternate" type="application/atom+xml" title="Viremail status updates" href="feed.xml">
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/status.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#services">Skip to services</a>
+  <header class="top">
+    <div class="wrap top-in">
+      <a class="brand" href="https://viremail.com" aria-label="Viremail home">
+        <svg class="mark" width="28" height="28" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16"/><path d="M18 20 L32 45 L46 20"/></svg>
+        <span class="word">viremail</span>
+      </a>
+      <span class="sub">Status</span>
+      <a class="top-link" href="https://viremail.com">Go to Viremail</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" id="overall" data-state="loading" aria-live="polite">
+      <span class="hero-icon" id="overall-icon" aria-hidden="true"></span>
+      <div>
+        <h1 id="overall-text">Checking Viremail</h1>
+        <p class="hero-sub" id="overall-sub">Loading the latest results.</p>
+      </div>
+    </section>
+
+    <noscript>
+      <p class="note">This page needs JavaScript to draw the results. The raw results are in <a href="data/current.json">data/current.json</a>, and incidents are on <a href="https://github.com/svayam-workplace/viremail-status/issues?q=label%3Aincident%2Cmaintenance">GitHub</a>.</p>
+    </noscript>
+
+    <section id="now" class="block" hidden>
+      <h2>Happening now</h2>
+      <div id="now-list" class="notes"></div>
+    </section>
+
+    <section id="services" class="block">
+      <div class="block-head">
+        <h2>Services</h2>
+        <ul class="legend" aria-label="Colour key for the daily bars">
+          <li><i class="k ok"></i>No problems</li>
+          <li><i class="k minor"></i>Under 15 minutes</li>
+          <li><i class="k major"></i>15 minutes or more</li>
+          <li><i class="k none"></i>No data</li>
+        </ul>
+      </div>
+      <div id="groups" class="groups"></div>
+    </section>
+
+    <section id="past" class="block">
+      <h2>Past incidents and maintenance</h2>
+      <div id="past-list" class="notes"><p class="muted">Loading.</p></div>
+    </section>
+
+    <section class="block two">
+      <div>
+        <h2>Get updates</h2>
+        <p>Follow the <a href="feed.xml">incident feed</a> in any feed reader. It lists incidents and planned maintenance, and updates within minutes.</p>
+        <p>Or, on GitHub, <a href="https://github.com/svayam-workplace/viremail-status">watch this page's repository</a> and choose Custom, then Issues. GitHub will email you when an incident opens, changes or closes.</p>
+      </div>
+      <div>
+        <h2>How this page works</h2>
+        <p>Every five minutes, an automatic check runs on GitHub, away from Viremail's own servers. It loads the website, the sign-in page and the desktop update list, looks up our domain names, and connects to mail sending and mail access without signing in.</p>
+        <p>Results are saved at least once an hour, and straight away when something changes. If a check fails twice in a row, an incident opens here on its own and closes when the check passes again.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    <p><a href="https://viremail.com">viremail.com</a><span aria-hidden="true"> · </span><a href="https://github.com/svayam-workplace/viremail-status">How this page is built</a><span aria-hidden="true"> · </span><a href="feed.xml">Feed</a></p>
+    <p class="muted">Viremail is made by Svayam Incarnation Limited. This page uses no cookies and no trackers.</p>
+  </footer>
+
+  <div id="tip" class="tip" role="tooltip" hidden></div>
+  <div id="sr" class="sr" aria-live="polite"></div>
+</body>
+</html>

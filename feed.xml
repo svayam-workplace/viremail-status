@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Viremail status</title>
+  <subtitle>Incidents and planned maintenance for Viremail</subtitle>
+  <id>https://status.viremail.com/</id>
+  <link rel="alternate" href="https://status.viremail.com/"/>
+  <link rel="self" href="https://status.viremail.com/feed.xml"/>
+  <updated>2026-09-29T00:00:00Z</updated>
+  <author><name>Viremail</name></author>
+</feed>

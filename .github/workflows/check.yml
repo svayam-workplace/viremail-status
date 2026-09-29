@@ -1,0 +1,61 @@
+name: Status checks
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+  # Refresh the saved incident list and the feed as soon as a note is added or changed.
+  issues:
+    types: [opened, edited, closed, reopened, labeled, unlabeled]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: status-checks
+  cancel-in-progress: false
+
+jobs:
+  check:
+    # Issue events only matter for issues carrying the incident or maintenance label
+    # (only people with write access can add labels).
+    if: >-
+      github.event_name != 'issues' ||
+      contains(github.event.issue.labels.*.name, 'incident') ||
+      contains(github.event.issue.labels.*.name, 'maintenance') ||
+      github.event.label.name == 'incident' ||
+      github.event.label.name == 'maintenance'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+
+      - name: Run the checks
+        id: run
+        run: node scripts/run.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Save the results
+        if: steps.run.outputs.commit == 'true'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data feed.xml
+          if git diff --cached --quiet; then
+            echo 'Nothing to save.'
+            exit 0
+          fi
+          git commit -q -m "Status results $(date -u '+%Y-%m-%d %H:%M') UTC"
+          for attempt in 1 2 3; do
+            if git push -q; then exit 0; fi
+            git pull -q --rebase
+          done
+          exit 1
